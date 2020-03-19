@@ -1,38 +1,21 @@
-{% load static %}
+{% extends "layout/basic.html" %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная  - Доска объявлений</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'bboard/style.css' %}">
-</head>
+
 <body>
-    <header>
-    <h1>Объявления</h1>
-    </header>
-
-
-    <nav>
-    <div>
-        <a href="{% url 'index' %}">Главная</a>
-        {% for rubric in rubrics %}
-        <a href="{% url 'on_rubric' rubric.pk %}">{{ rubric.name }}</a>
-        {% endfor %}
-        <a href="{% url  'add' %}">Добавить</a>
-    </div>
-    </nav>
-    <section>
+{% block content %}
 
     {% for bb in bbs %}
-        <div>
+        <div class="b">
             <h2>{{ bb.title }}</h2>
             <p>{{ bb.content }}</p>
             <p><a href="{% url 'on_rubric'  bb.rubric.pk %}">{{ bb.rubric.name }}</a></p>
             <p>{{ bb.published|date:"d M Y H:i:s T"}}</p>
         </div>
     {% endfor %}
-    </section>
+
+{% endblock %}
 
 </body>
 </html>
