@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 # Create your views here.
 from django.http import HttpResponse
@@ -47,10 +49,31 @@ class BbCreateView(CreateView):
         context['rubrics'] = Rubric.objects.all()
         return context
 
+
 class RubricCreate(CreateView):
     model = Rubric
     fields = ['title']
 
 
+class BbDetailView(DetailView):
+    model = Bb
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['rubrics'] = Rubric.objects.all()
+        return context
+
+
+class BbByRubricView(ListView):
+    template_name = 'bboard/by_rubric.html'
+    context_object_name = 'bbs'
+
+    def get_queryset(self):
+        return Bb.objects.filter(rubric=self.kwargs['rubric_id'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['rubrics'] = Rubric.objects.all()
+        context['current_rubric'] = Rubric.objects.get(pk=self.kwargs['rubric_id'])
+        return context
 

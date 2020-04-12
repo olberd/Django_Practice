@@ -14,8 +14,10 @@ class Bb(models.Model):
         verbose_name = 'Объявление'
         ordering = ['-published']
 
+
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, verbose_name='Название')
+
     def __str__(self):
         return self.name
 

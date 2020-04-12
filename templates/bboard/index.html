@@ -8,7 +8,7 @@
 
     {% for bb in bbs %}
         <div class="b">
-            <h2>{{ bb.title }}</h2>
+            <h2><a href="{% url 'detail' pk=bb.pk %}"> {{ bb.title }} </a></h2>
             <p>{{ bb.content }}</p>
             <p><a href="{% url 'on_rubric'  bb.rubric.pk %}">{{ bb.rubric.name }}</a></p>
             <p>{{ bb.published|date:"d M Y H:i:s T"}}</p>
